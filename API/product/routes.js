@@ -30,7 +30,7 @@ router.param('productId', async (req, res, next, productId) => {
 const storage = multer.diskStorage({
   destination: './media',
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}${file.originalname}}`);
+    cb(null, `${Date.now()}${file.originalname}`);
   },
 });
 // multer upload
