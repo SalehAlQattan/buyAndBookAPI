@@ -29,7 +29,7 @@ passport.use(jwtStrategy);
 app.use('/products', productRoutes);
 app.use(userRoutes);
 
-// app.use('/media', express.static('media'));
+app.use('/media', express.static('media'));
 
 // Error Handling Middleware
 app.use((error, req, res, next) => {
