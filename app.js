@@ -12,6 +12,7 @@ const db = require('./db/models');
 // importing routes
 const productRoutes = require('./API/product/routes');
 const userRoutes = require('./API/user/routes');
+const bookingRoutes = require('./API/booking/routes');
 
 // passport
 const passport = require('passport');
@@ -28,6 +29,7 @@ passport.use(jwtStrategy);
 // routes middleware
 app.use('/products', productRoutes);
 app.use(userRoutes);
+app.use('/booking', bookingRoutes);
 
 app.use('/media', express.static('media'));
 
