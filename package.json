@@ -6,7 +6,8 @@
   "author": "salehalqattan <salehalqattan@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon -r dotenv/config app.js"
+    "start": "nodemon -r dotenv/config app.js",
+    "deploy": "node app.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

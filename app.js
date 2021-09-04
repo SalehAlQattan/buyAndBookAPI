@@ -52,8 +52,8 @@ const run = async () => {
     await db.sequelize.sync({ alter: true });
     console.log('Connected to Database Successfully');
     // running the server
-    app.listen(8000, () =>
-      console.log('Server Successfully Running on Port 8000')
+    app.listen(8080, () =>
+      console.log('Server Successfully Running on Port 8080')
     );
   } catch (error) {}
 };
