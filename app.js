@@ -49,12 +49,15 @@ app.use((req, res, next) => {
 const run = async () => {
   try {
     // connecting to db
-    await db.sequelize.sync({ alter: true });
+    // await db.sequelize.sync({ alter: true });
+    await new db.Sequelize(process.env.DATABASE_URI);
     console.log('Connected to Database Successfully');
     // running the server
     app.listen(8080, () =>
       console.log('Server Successfully Running on Port 8080')
     );
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 run();
