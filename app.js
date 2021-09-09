@@ -29,6 +29,7 @@ app.use('/products', productRoutes);
 app.use(userRoutes);
 app.use('/booking', bookingRoutes);
 
+// image handling middleware
 app.use('/media', express.static('media'));
 
 // Error Handling Middleware
@@ -50,7 +51,7 @@ const run = async () => {
     mongoose.connect(process.env.DATABASE_URI);
     console.log('Connected to Database Successfully');
     // running the server
-    app.listen(8000, () =>
+    app.listen(process.env.PORT || 8000, () =>
       console.log('Server Successfully Running on Port 8000')
     );
   } catch (error) {

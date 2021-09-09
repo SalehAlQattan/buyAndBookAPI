@@ -8,6 +8,9 @@
   "scripts": {
     "start": "nodemon -r dotenv/config app.js"
   },
+  "engines": {
+    "node": "16.4.2"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
