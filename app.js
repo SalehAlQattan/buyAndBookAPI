@@ -2,12 +2,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 // setting the app
 const app = express();
-
-// importing db
-const db = require('./db/models');
 
 // importing routes
 const productRoutes = require('./API/product/routes');
@@ -49,12 +47,11 @@ app.use((req, res, next) => {
 const run = async () => {
   try {
     // connecting to db
-    // await db.sequelize.sync({ alter: true });
-    await new db.Sequelize(process.env.DATABASE_URI);
+    mongoose.connect(process.env.DATABASE_URI);
     console.log('Connected to Database Successfully');
     // running the server
-    app.listen(8080, () =>
-      console.log('Server Successfully Running on Port 8080')
+    app.listen(8000, () =>
+      console.log('Server Successfully Running on Port 8000')
     );
   } catch (error) {
     console.error(error);

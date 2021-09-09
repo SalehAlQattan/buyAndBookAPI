@@ -1,55 +1,56 @@
-const { Product } = require('../../db/models');
+const Product = require('../../db/models/Product');
 
-// fetch all products
 exports.fetchProducts = async (req, res, next) => {
   try {
-    const products = await Product.findAll({
-      attribute: { exclude: ['id', 'createdAt', 'updatedAt'] },
-    });
+    // const products = await Product.find({}, { _id: 0, __v: 0 });
+    const products = await Product.find({}, { __v: 0 });
     res.json(products);
   } catch (error) {
     next(error);
   }
 };
 
-// fetch single product
 exports.fetchSingleProduct = async (productId, next) => {
   try {
-    return await Product.findByPk(productId);
+    return await Product.findById(productId);
   } catch (error) {
     next(error);
   }
 };
 
-// create new product
 exports.createProduct = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = `http://${req.get('host')}/${req.file.path}`;
     }
-    const newProduct = await Product.create(req.body);
+    const newProduct = await new Product(req.body);
+    await newProduct.save();
     res.status(201).json(newProduct);
   } catch (error) {
     next(error);
   }
 };
 
-// update product
 exports.updateProduct = async (req, res, next) => {
   try {
-    if (req.file) req.body.image = `http://${req.get('host')}/${req.file.path}`;
-    const updatedProduct = await req.product.update(req.body);
-    res.json(updatedProduct);
+    if (req.file) {
+      req.body.image = `http://${req.get('host')}/${req.file.path}`;
+    }
+    const foundProduct = req.product;
+    if (foundProduct) {
+      await Product.findByIdAndUpdate(foundProduct.id, req.body);
+    }
+    // fix the response
+    res.json(foundProduct);
   } catch (error) {
     next(error);
   }
 };
 
-// delete product
 exports.deleteProduct = async (req, res, next) => {
   try {
     const foundProduct = req.product;
-    if (foundProduct) await foundProduct.destroy();
+    if (foundProduct) await Product.findByIdAndDelete(foundProduct.id);
     res.status(201).end();
   } catch (error) {
     res.status(404).json({ message: 'Product Not Found' });

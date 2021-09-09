@@ -8,13 +8,11 @@ const bycrpt = require('bcrypt');
 const { JWT_SECRET } = require('../config/keys');
 
 // model
-const { User } = require('../db/models');
+const User = require('../db/models/User');
 
 exports.localStrategy = new LocalStrategy(async (username, password, done) => {
   try {
-    const user = await User.findOne({
-      where: { username },
-    });
+    const user = await User.findOne({ username });
     const passwordsMatch = user
       ? await bycrpt.compare(password, user.password)
       : false;
@@ -37,7 +35,7 @@ exports.jwtStrategy = new JWTStrategy(
       return done(null, false);
     }
     try {
-      const user = await User.findByPk(jwtPayload.id);
+      const user = await User.findById(jwtPayload.id);
       done(null, user);
     } catch (error) {
       done(error);
